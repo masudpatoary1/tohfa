@@ -1,0 +1,49 @@
+::-webkit-scrollbar {
+    position: absolute;
+    width: 8px;
+
+
+}
+
+::-webkit-scrollbar-track {
+    background: #b9b9b9;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background: #43c2f4;
+    border-radius: 10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+    transition: 200ms;
+    background: rgb(255, 176, 74);
+}
+.btn_action {
+    transition: 100ms;
+}
+
+.btn_action:active {
+    transform: scale(1.15) !important;
+    border: none !important;
+}
+@media(max-width: 1200px) {
+    .carousel_img {
+        width: 100%;
+        height: 90vh;
+    }
+
+    .carousel_img>img {
+        height: 100% ;
+        object-fit: cover ;
+    }
+}
+
+@media(max-width: 769px) {
+    .carousel_img {
+        height: 100vh;
+    }
+}
+
+@media(max-width: 769px) {}
