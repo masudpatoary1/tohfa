@@ -12,6 +12,7 @@ const arrowIcon = document.getElementById('arrow-icon')
 const calendarContainer = document.getElementById('calendar-container');
 const destinationListDiv = document.getElementById(`destination-list-items`)
 const days = document.getElementsByClassName("day")
+const SearchBtn = document.getElementById('search-url')
 
 let destinationSelected = false
 let numberOfClickOnDateBtn = 0
@@ -38,8 +39,6 @@ let greenBgDays = []
 let rangehoverId = []
 let selectedMonths = []
 let num = []
-
-
 
 function cityInputGreenBg() {
   hideCalendar()
@@ -127,7 +126,7 @@ window.addEventListener('click', function (e) {
   }
   else {
     checkinOutRegularBg()
-    console.log(e.target.id)
+    // console.log(e.target.id)
   }
 });
 
@@ -226,30 +225,47 @@ const allCityName = [
 
 for (let i = 0; i < allCityName.length; i++) {
   const cityNameDiv = document.createElement("div");
+
   cityNameDiv.classList.add("destination-city");
   const idForCityDiv = allCityName[i]?.replace(/ /g, '_')
   const newIdForCityName = idForCityDiv.toLowerCase().replaceAll('.', '')
   cityNameDiv.setAttribute("id", newIdForCityName);
   cityNameDiv.innerText = allCityName[i];
   destinationListDiv.appendChild(cityNameDiv);
-
-
-
   cityNameDiv.addEventListener('click', (id) => {
     destinationInputField.value = cityNameDiv.innerText;
-    // console.log(inputValueForSearch)
+    a = destinationListDiv.getElementsByTagName("div");
+    for (i = 0; i < a.length; i++) {
+      a[i].classList.remove('d-hidden')
+    }
     setInputValueForSearch()
     hideCitynameList()
   })
 }
 
+destinationInputField.addEventListener('keyup', () => {
+  const filter = destinationInputField.value.toUpperCase();
+  a = destinationListDiv.getElementsByTagName("div");
+// console.log(a.length)
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      // a[i].style.display = "";
+      a[i].classList.remove('d-hidden')
+      a[i].classList.add('d-shown')
+    } else {
+      // a[i].style.display = "none"; 
+
+      a[i].classList.remove('d-shown')
+      a[i].classList.add('d-hidden')
+    }
+  }
+})
 const setInputValueForSearch = () => {
   const cityNameForSearch = destinationInputField.value.toLowerCase().replace(/ /g, '_')
   fd_City_name = cityNameForSearch.toLowerCase().replaceAll('.', '')
   console.log(fd_City_name)
 }
-
-
 
 
 // calender
@@ -363,27 +379,27 @@ function load() {
     month: "long"
   })}`
   monthDisplay.innerText = `${selectedMonth} ${year}`;
-  // clear previous html in the calendar
+  // clear previous calendar
   calendar.innerHTML = "";
 
   const frag = document.createDocumentFragment();
   for (let i = 1; i <= paddingDays + daysInMonth + nextPaddingDays; i++) {
-    const daySquare = document.createElement("div");
-    daySquare.classList.add("day");
+    const day = document.createElement("div");
+    day.classList.add("day");
 
 
 
     if (i > paddingDays && i <= paddingDays + daysInMonth) {
-      daySquare.innerText = i - paddingDays;
+      day.innerText = i - paddingDays;
       const id = (monthInString + '_' + year + '_' + (i - paddingDays))
-      daySquare?.setAttribute("id", id)
+      day?.setAttribute("id", id)
 
       ///////////////////////////////////////////////////////
       // event for date range
       ///////////////////////////////////////////////////
 
 
-      daySquare.addEventListener('mouseleave', () => {
+      day.addEventListener('mouseleave', () => {
         if (greenBgDays.length == 2) {
           setRangeBg()
         }
@@ -395,9 +411,9 @@ function load() {
         }
       })
 
-      daySquare.addEventListener('mouseover', (e) => {
+      day.addEventListener('mouseover', (e) => {
 
-        const selectedDate = new Date(year, month, daySquare.innerText)
+        const selectedDate = new Date(year, month, day.innerText)
         if (greenBgDays.length == 2) {
           setRangeBg()
           return
@@ -420,7 +436,7 @@ function load() {
           rangehoverId.push(e.target.id)
           hoveredYear = year
           hoverMonth = monthDisplay.innerText.slice(0, 3)
-          hoverInnerNum = parseFloat(daySquare.innerText)
+          hoverInnerNum = parseFloat(day.innerText)
           setIdForRangebg()
           setRangeBg()
         }
@@ -431,8 +447,8 @@ function load() {
       ///////////////////////////////////////////////
       // add click event for each day of the month//
       //////////////////////////////////////////////
-      daySquare.addEventListener("click", (e) => {
-        const selectedDays = new Date(year, month, daySquare.innerText)
+      day.addEventListener("click", (e) => {
+        const selectedDays = new Date(year, month, day.innerText)
         let selectedMonthNum
         const newSelectedMonthNum = selectedDays.toLocaleDateString(locale, {
           month: "numeric",
@@ -441,14 +457,14 @@ function load() {
         if (newSelectedMonthNum.length === 1) {
           selectedMonthNum = '0' + newSelectedMonthNum;
           // console.log(selectedMonthNum, selectedMonthNum.length)
-        } 
-        
+        }
+
         else {
           selectedMonthNum = newSelectedMonthNum;
         }
 
-        let selectedDay = daySquare.innerText
-        if (daySquare.innerText.length === 1) {
+        let selectedDay = day.innerText
+        if (day.innerText.length === 1) {
           selectedDay = '0' + selectedDay;
         } else {
           selectedDay = selectedDay;
@@ -459,7 +475,7 @@ function load() {
         hideCitynameList()
         checkinOutgreenBg()
         ///////////////////////////////////////////////////////////////////
-        const selectedDate = new Date(year, month, daySquare.innerText)
+        const selectedDate = new Date(year, month, day.innerText)
         const selectedDateStr = selectedDate.toLocaleDateString(locale, {
           weekday: "short",
           month: "short",
@@ -487,7 +503,7 @@ function load() {
 
           if (!activeDay && monthIndex >= 0
             && Number(todayDate) < Number(selectedDate)
-            && toDay > parseFloat(daySquare.innerText)
+            && toDay > parseFloat(day.innerText)
             || !activeDay && (!rejected && checkOutDate.innerText === selectedDateStr)
             && numberOfClickOnDateBtn == 1) {
             numberOfClickOnDateBtn = 0;
@@ -496,7 +512,7 @@ function load() {
 
             // return
           }
-          else if (toDay <= parseFloat(daySquare.innerText) || activeDay == true && (parseInt(localStorage?.getItem('checkOutDayInMS')) < Number(selectedDate)) || (greenBgDays.length == 2)
+          else if (toDay <= parseFloat(day.innerText) || activeDay == true && (parseInt(localStorage?.getItem('checkOutDayInMS')) < Number(selectedDate)) || (greenBgDays.length == 2)
             && greenBgDays[0] == e.target.id || greenBgDays[1] == e.target.id) {
             updateCheckInDay()
             greenBgDays = [];
@@ -509,7 +525,7 @@ function load() {
             rejected = false;
             activeDay = true;
             greenBgDays.push(`${e.target.id}`);
-            checkInInnerNum = parseFloat(daySquare.innerText)
+            checkInInnerNum = parseFloat(day.innerText)
             fd_Check_in = selectedYMD
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
             greenBgForCheckInOut();
@@ -531,7 +547,7 @@ function load() {
             activeDay = true;
             greenBgDays.push(`${e.target.id}`);
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
-            checkInInnerNum = parseFloat(daySquare.innerText)
+            checkInInnerNum = parseFloat(day.innerText)
             fd_Check_out = ''
             fd_Check_in = selectedYMD;
             checkInYear = year
@@ -546,7 +562,7 @@ function load() {
         // check out date
         //////////////////////////////////////////////////////////////////
         if (numberOfClickOnDateBtn > 2 || numberOfClickOnDateBtn == 2) {
-          const selectedCheckOutDay = new Date(year, month, daySquare.innerText)
+          const selectedCheckOutDay = new Date(year, month, day.innerText)
           if (parseInt(localStorage?.getItem('checkInDayInMS')) > Number(selectedDate)
             || parseInt(localStorage?.getItem('checkInDayInMS') == Number(selectedDate))
             || (monthIndex < 0 && Number(todayDate) > Number(selectedDate))
@@ -564,7 +580,7 @@ function load() {
             fd_Check_out = selectedYMD
             checkOutYear = year
             greenBgDays.push(`${e.target.id}`)
-            checkOutInnerNum = parseFloat(daySquare.innerText)
+            checkOutInnerNum = parseFloat(day.innerText)
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
 
             setIdForRangebg()
@@ -577,18 +593,18 @@ function load() {
       });
 
     } else if (i <= paddingDays) {
-      daySquare.classList.add("disabaled-date");
-      daySquare.classList.remove("day");
+      day.classList.add("disabaled-date");
+      day.classList.remove("day");
     } else {
-      daySquare.classList.add("disabaled-date");
-      daySquare.classList.remove("day");
+      day.classList.add("disabaled-date");
+      day.classList.remove("day");
     }
 
     if (i - paddingDays + 1 <= toDay && monthIndex === 0) {
-      daySquare.classList.add("disabaled-date")
-      daySquare.classList.remove("day");
+      day.classList.add("disabaled-date")
+      day.classList.remove("day");
     }
-    frag.appendChild(daySquare);
+    frag.appendChild(day);
   }
 
   calendar.appendChild(frag);
@@ -822,7 +838,10 @@ const searchForVacation = () => {
   const checkinDateSearch = checkinDate.innerText
   const checkOutDateSearch = checkOutDate.innerText
   if (checkOutDate.innerText == '' && checkinDate.innerText == '') {
-    alert('Your search request can not be complete, please put correct date')
+    // alert('Your search request can not be complete, please put correct date')
+
+    SearchBtn.setAttribute("data-bs-toggle", "modal")
+    SearchBtn.click()
     return
   } else {
     setTimeout(() => { controlCheckOutDate() }, 10)
@@ -830,6 +849,11 @@ const searchForVacation = () => {
     console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
   }
 }
+
+const hideModalBtn = () => {
+  SearchBtn.removeAttribute("data-bs-toggle", "modal")
+}
+
 initButtons();
 load();
 
