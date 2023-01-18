@@ -25,7 +25,7 @@ const renderCarousel = () => {
         // carouselel.id[0].classList?.add('active')
         setTimeout(() => {
             carouselel.innerHTML = `<div class="carousel_img">
-                    <img src="${imgPath[i]?.imgUrl}" class="d-block w-100" alt="">  
+                    <img src="${imgPath[i]?.imgUrl}" class="d-block w-100 rounded-3" alt="">  
                 </div>`
         }, 1);
         carouselContainer.appendChild(carouselel)

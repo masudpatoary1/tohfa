@@ -35,24 +35,24 @@ let hoverInnerNum
 let hoverMonth
 let hoveredYear
 
-let greenBgDays = []
+let blueBgDays = []
 let rangehoverId = []
 let selectedMonths = []
 let num = []
 
-function cityInputGreenBg() {
+function cityInputInfoBg() {
   hideCalendar()
   destinationDiv.classList.add('active_bg');
   destinationDiv.classList.remove('inactive_bg');
   destinationSeArchIcon.classList.add('icon-fill-white');
-  destinationSeArchIcon.classList.remove('icon-fill-green');
+  destinationSeArchIcon.classList.remove('icon-fill-blue');
 }
 function cityInputRegularBg() {
   // console.log(id)
   destinationDiv.classList.add('inactive_bg');
   destinationDiv.classList.remove('active_bg');
   destinationSeArchIcon.classList.remove('icon-fill-white');
-  destinationSeArchIcon.classList.add('icon-fill-green');
+  destinationSeArchIcon.classList.add('icon-fill-blue');
 }
 
 
@@ -64,17 +64,17 @@ const checkinOutRegularBg = () => {
   dateRangeDiv.classList.remove('side-border-none')
 
   calendarIcon.classList.remove('icon-fill-white')
-  calendarIcon.classList.add('icon-fill-green')
+  calendarIcon.classList.add('icon-fill-blue')
 
   arrowIcon.classList.remove('icon-fill-white')
-  arrowIcon.classList.add('icon-fill-green')
+  arrowIcon.classList.add('icon-fill-blue')
 
   borderLRDiv.classList?.add('inactive_bg')
   borderLRDiv.classList?.remove('active_bg')
 
   hideCalendar()
 }
-const checkinOutgreenBg = () => {
+const checkinOutBlueBg = () => {
   dateRangeDiv.classList.add('side-border-none')
   dateRangeDiv.classList.remove('side-border')
 
@@ -82,33 +82,33 @@ const checkinOutgreenBg = () => {
   borderLRDiv.classList.remove('inactive_bg')
 
   calendarIcon.classList.add('icon-fill-white')
-  calendarIcon.classList.remove('icon-fill-green')
+  calendarIcon.classList.remove('icon-fill-blue')
 
   arrowIcon.classList.add('icon-fill-white')
-  arrowIcon.classList.remove('icon-fill-green')
+  arrowIcon.classList.remove('icon-fill-blue')
   showcalendar()
 }
 
-const showCitynameList = () => {
-  destinationListDiv.classList.remove('d-hidden');
-  destinationListDiv.classList.add('d-shown');
-  cityInputGreenBg()
+const showDestinationList = () => {
+  destinationListDiv.classList.remove('d-none');
+  destinationListDiv.classList.add('d-block');
+  cityInputInfoBg()
 }
 
 const hideCitynameList = () => {
-  destinationListDiv.classList.add('d-hidden');
-  destinationListDiv.classList.remove('d-shown');
+  destinationListDiv.classList.add('d-none');
+  destinationListDiv.classList.remove('d-block');
   cityInputRegularBg()
 }
 hideCitynameList()
 const showcalendar = () => {
-  calendarContainer.classList.add('d-shown');
-  calendarContainer.classList.remove('d-hidden');
+  calendarContainer.classList.add('d-block');
+  calendarContainer.classList.remove('d-none');
 }
 
 const hideCalendar = () => {
-  calendarContainer.classList.add('d-hidden');
-  calendarContainer.classList.remove('d-shown');
+  calendarContainer.classList.add('d-none');
+  calendarContainer.classList.remove('d-block');
 }
 
 window.addEventListener('click', function (e) {
@@ -236,7 +236,7 @@ for (let i = 0; i < allCityName.length; i++) {
     destinationInputField.value = cityNameDiv.innerText;
     a = destinationListDiv.getElementsByTagName("div");
     for (i = 0; i < a.length; i++) {
-      a[i].classList.remove('d-hidden')
+      a[i].classList.remove('d-none')
     }
     setInputValueForSearch()
     hideCitynameList()
@@ -251,13 +251,13 @@ destinationInputField.addEventListener('keyup', () => {
     txtValue = a[i].textContent || a[i].innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
       // a[i].style.display = "";
-      a[i].classList.remove('d-hidden')
-      a[i].classList.add('d-shown')
+      a[i].classList.remove('d-none')
+      a[i].classList.add('d-block')
     } else {
       // a[i].style.display = "none"; 
 
-      a[i].classList.remove('d-shown')
-      a[i].classList.add('d-hidden')
+      a[i].classList.remove('d-none')
+      a[i].classList.add('d-block')
     }
   }
 })
@@ -268,7 +268,7 @@ const setInputValueForSearch = () => {
 }
 
 
-// calender
+// calendar
 
 let monthIndex = 0;
 const calendar = document.getElementById("calendar");
@@ -292,43 +292,43 @@ load();
 
 const controlCheckInField = () => {
   checkOutDate.innerText = ''
-  checkOutLabel.classList.add('d-shown')
-  checkOutLabel.classList.remove('d-hidden')
+  checkOutLabel.classList.add('d-block')
+  checkOutLabel.classList.remove('d-none')
 
-  checkinLabel.classList.remove('d-shown')
-  checkinLabel.classList.add('d-hidden')
-  checkinDate.classList.add('d-shown')
-  checkinDate.classList.remove('d-hidden')
+  checkinLabel.classList.remove('d-block')
+  checkinLabel.classList.add('d-none')
+  checkinDate.classList.add('d-block')
+  checkinDate.classList.remove('d-none')
 }
 const controlCheckOutField = () => {
-  checkOutLabel.classList.remove('d-shown')
-  checkOutLabel.classList.add('d-hidden')
+  checkOutLabel.classList.remove('d-block')
+  checkOutLabel.classList.add('d-none')
 
-  checkOutDate.classList.remove('d-hidden');
-  checkOutDate.classList.add('d-shown');
+  checkOutDate.classList.remove('d-none');
+  checkOutDate.classList.add('d-block');
 }
 
 
-const removeGreenBg = () => {
+const removeblueBg = () => {
   for (let i = 0; i < days.length; i++) {
     setTimeout(() => days[i].classList.remove('active-day-active_bg'), 10)
   }
 }
-const addGreenBg = () => {
-  for (let i = 0; i < greenBgDays?.length; i++) {
+const addblueBg = () => {
+  for (let i = 0; i < blueBgDays?.length; i++) {
     setTimeout(() =>
-      document.getElementById(greenBgDays[i])?.classList.add('active-day-active_bg'),
+      document.getElementById(blueBgDays[i])?.classList.add('active-day-active_bg'),
 
       10)
   }
 }
-const greenBgForCheckInOut = () => {
+const blueBgForCheckInOut = () => {
   for (let i = 0; i < days.length; i++) {
     setTimeout(() => days[i].classList.remove('active-day-active_bg'), 10)
   }
-  for (let i = 0; i < greenBgDays?.length; i++) {
+  for (let i = 0; i < blueBgDays?.length; i++) {
     setTimeout(() =>
-      document.getElementById(greenBgDays[i])?.classList.add('active-day-active_bg'),
+      document.getElementById(blueBgDays[i])?.classList.add('active-day-active_bg'),
       10)
   }
 }
@@ -400,10 +400,10 @@ function load() {
 
 
       day.addEventListener('mouseleave', () => {
-        if (greenBgDays.length == 2) {
+        if (blueBgDays.length == 2) {
           setRangeBg()
         }
-        if (greenBgDays.length == 1) {
+        if (blueBgDays.length == 1) {
           rangehoverId = []
           num = []
           hoverMonth = ''
@@ -414,11 +414,11 @@ function load() {
       day.addEventListener('mouseover', (e) => {
 
         const selectedDate = new Date(year, month, day.innerText)
-        if (greenBgDays.length == 2) {
+        if (blueBgDays.length == 2) {
           setRangeBg()
           return
         }
-        if (greenBgDays.length == 1 &&
+        if (blueBgDays.length == 1 &&
           (Number(todayDate) > Number(selectedDate)) && (selectedMonths == 1 && checkInInnerNum > checkOutInnerNum)) {
           rangehoverId = []
           num = []
@@ -473,7 +473,7 @@ function load() {
         const selectedYMD = (year + "-" + selectedMonthNum + "-" + selectedDay)
         numberOfClickOnDateBtn++;
         hideCitynameList()
-        checkinOutgreenBg()
+        checkinOutBlueBg()
         ///////////////////////////////////////////////////////////////////
         const selectedDate = new Date(year, month, day.innerText)
         const selectedDateStr = selectedDate.toLocaleDateString(locale, {
@@ -512,30 +512,30 @@ function load() {
 
             // return
           }
-          else if (toDay <= parseFloat(day.innerText) || activeDay == true && (parseInt(localStorage?.getItem('checkOutDayInMS')) < Number(selectedDate)) || (greenBgDays.length == 2)
-            && greenBgDays[0] == e.target.id || greenBgDays[1] == e.target.id) {
+          else if (toDay <= parseFloat(day.innerText) || activeDay == true && (parseInt(localStorage?.getItem('checkOutDayInMS')) < Number(selectedDate)) || (blueBgDays.length == 2)
+            && blueBgDays[0] == e.target.id || blueBgDays[1] == e.target.id) {
             updateCheckInDay()
-            greenBgDays = [];
+            blueBgDays = [];
             hoverMonth = undefined
             rangehoverId = [];
             selectedMonths = [];
             num = []
             setRangeBg();
-            greenBgForCheckInOut();
+            blueBgForCheckInOut();
             rejected = false;
             activeDay = true;
-            greenBgDays.push(`${e.target.id}`);
+            blueBgDays.push(`${e.target.id}`);
             checkInInnerNum = parseFloat(day.innerText)
             fd_Check_in = selectedYMD
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
-            greenBgForCheckInOut();
+            blueBgForCheckInOut();
             setIdForRangebg();
             setRangeBg();
 
           }
           else {
-            greenBgForCheckInOut();
-            greenBgDays = [];
+            blueBgForCheckInOut();
+            blueBgDays = [];
             hoverMonth = undefined
             rangehoverId = [];
             selectedMonths = [];
@@ -545,14 +545,14 @@ function load() {
             rejected = false;
             numberOfClickOnDateBtn = 1;
             activeDay = true;
-            greenBgDays.push(`${e.target.id}`);
+            blueBgDays.push(`${e.target.id}`);
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
             checkInInnerNum = parseFloat(day.innerText)
             fd_Check_out = ''
             fd_Check_in = selectedYMD;
             checkInYear = year
 
-            greenBgForCheckInOut();
+            blueBgForCheckInOut();
             updateCheckInDay();
             setIdForRangebg();
             setRangeBg();
@@ -579,7 +579,7 @@ function load() {
             putCheckIn = false
             fd_Check_out = selectedYMD
             checkOutYear = year
-            greenBgDays.push(`${e.target.id}`)
+            blueBgDays.push(`${e.target.id}`)
             checkOutInnerNum = parseFloat(day.innerText)
             setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + year)
 
@@ -587,7 +587,7 @@ function load() {
             bgForMultiMonth()
             setRangeBg()
           }
-          greenBgForCheckInOut()
+          blueBgForCheckInOut()
           numberOfClickOnDateBtn = 0
         }
       });
@@ -611,7 +611,7 @@ function load() {
 }
 
 const clearCheakinOutDate = () => {
-  greenBgDays = []
+  blueBgDays = []
   rangehoverId = []
   num = []
   selectedMonths = []
@@ -621,13 +621,13 @@ const clearCheakinOutDate = () => {
   checkinDate.innerText = '';
   checkOutDate.innerText = '';
 
-  checkinLabel.classList.add('d-shown');
-  checkinLabel.classList.remove('d-hidden');
-  checkinDate.classList.remove('d-shown');
-  checkinDate.classList.add('d-hidden');
+  checkinLabel.classList.add('d-block');
+  checkinLabel.classList.remove('d-none');
+  checkinDate.classList.remove('d-block');
+  checkinDate.classList.add('d-none');
 
-  checkOutLabel.classList.add('d-shown');
-  checkOutLabel.classList.remove('d-hidden');
+  checkOutLabel.classList.add('d-block');
+  checkOutLabel.classList.remove('d-none');
 
   setTimeout(() => { localStorage.removeItem('checkInDayInMS') }, 20);
   setTimeout(() => { localStorage.removeItem('checkOutDayInMS') }, 20);
@@ -643,10 +643,10 @@ const controlCheckOutDate = () => {
 
     checkOutDate.innerText = ''
     parseInt(localStorage.removeItem('checkOutDayInMS'))
-    checkOutLabel.classList.add('d-shown');
-    checkOutDate.classList.add('d-hidden');
-    checkOutLabel.classList.remove('d-hidden');
-    checkOutDate.classList.remove('d-shown');
+    checkOutLabel.classList.add('d-block');
+    checkOutDate.classList.add('d-none');
+    checkOutLabel.classList.remove('d-none');
+    checkOutDate.classList.remove('d-block');
     numberOfClickOnDateBtn = 0;
     rejected = false
     activeDay = true
@@ -666,10 +666,10 @@ const controlCheckOutDate = () => {
     ) {
       setTimeout(() => { checkOutDate.innerText = '' }, 10);
       parseInt(localStorage.removeItem('checkOutDayInMS'))
-      checkOutLabel.classList.add('d-shown');
-      checkOutDate.classList.add('d-hidden');
-      checkOutLabel.classList.remove('d-hidden');
-      checkOutDate.classList.remove('d-shown');
+      checkOutLabel.classList.add('d-block');
+      checkOutDate.classList.add('d-none');
+      checkOutLabel.classList.remove('d-none');
+      checkOutDate.classList.remove('d-block');
       setTimeout(() => { checkinOutRegularBg() }, 10);
       numberOfClickOnDateBtn = 0;
       rejected = false
@@ -683,7 +683,7 @@ const applyCheakinOutDate = () => {
 }
 
 const setMonthName = (monthNameNYear) => {
-  if (greenBgDays.length == 1) {
+  if (blueBgDays.length == 1) {
     let found = selectedMonths.find(e => e == monthNameNYear)
     if (found) {
       return
@@ -700,7 +700,7 @@ function initButtons() {
     if (id === "backButton") {
       console.log('clicked backButton')
       monthIndex--;
-      if (greenBgDays.length < 2) {
+      if (blueBgDays.length < 2) {
         selectedMonths.pop()
       }
       if (monthIndex < 0) {
@@ -711,7 +711,7 @@ function initButtons() {
       } else {
         bgForMultiMonth()
         load()
-        greenBgForCheckInOut()
+        blueBgForCheckInOut()
         setRangeBg()
       };
     }
@@ -721,7 +721,7 @@ function initButtons() {
       setMonthName(monthDisplay.innerText.substring(0, 3) + '_' + monthDisplay.innerText.slice(-4))
       load();
       bgForMultiMonth()
-      greenBgForCheckInOut()
+      blueBgForCheckInOut()
       setRangeBg()
     }
   });
@@ -732,13 +732,13 @@ function initButtons() {
 ///////////////////////////////////////////
 
 const setIdForRangebg = () => {
-  const checkInDayStartStr = greenBgDays[0]?.substring(0, 8)
-  const checkOutDayStartStr = greenBgDays[1]?.substring(0, 8)
+  const checkInDayStartStr = blueBgDays[0]?.substring(0, 8)
+  const checkOutDayStartStr = blueBgDays[1]?.substring(0, 8)
   const endHoverDay = rangehoverId[0]?.substring(0, 8)
-  if (greenBgDays.length == 2 && (checkInDayStartStr !== endHoverDay)) {
+  if (blueBgDays.length == 2 && (checkInDayStartStr !== endHoverDay)) {
     setRangeBg()
   }
-  else if ((greenBgDays.length == 1) && checkInDayStartStr === endHoverDay && selectedMonths.length == 1 || monthIndex > 0) {
+  else if ((blueBgDays.length == 1) && checkInDayStartStr === endHoverDay && selectedMonths.length == 1 || monthIndex > 0) {
     num = []
     if (endHoverDay?.length == 8) {
       for (let i = checkInInnerNum; i < parseFloat(hoverInnerNum); i++) {
@@ -748,10 +748,10 @@ const setIdForRangebg = () => {
     setRangeBg()
   }
 
-  if (greenBgDays.length == 2 && (checkInDayStartStr !== checkOutDayStartStr)) {
+  if (blueBgDays.length == 2 && (checkInDayStartStr !== checkOutDayStartStr)) {
 
   }
-  else if ((checkInDayStartStr === checkOutDayStartStr) && (greenBgDays.length == 1) && selectedMonths.length < 3 && monthIndex >= 0) {
+  else if ((checkInDayStartStr === checkOutDayStartStr) && (blueBgDays.length == 1) && selectedMonths.length < 3 && monthIndex >= 0) {
     console.log(selectedMonths)
     num = []
     console.log(hoverInnerNum)
@@ -763,11 +763,11 @@ const setIdForRangebg = () => {
 
 
 
-  if (greenBgDays.length == 1 && checkInDayStartStr == checkOutDayStartStr) {
+  if (blueBgDays.length == 1 && checkInDayStartStr == checkOutDayStartStr) {
     num = []
   }
 
-  else if (endHoverDay?.length == 8 && (checkInDayStartStr !== endHoverDay) && (greenBgDays.length == 1) && (selectedMonths.length > 1) && monthIndex >= 0) {
+  else if (endHoverDay?.length == 8 && (checkInDayStartStr !== endHoverDay) && (blueBgDays.length == 1) && (selectedMonths.length > 1) && monthIndex >= 0) {
     num = []
     for (let i = checkInInnerNum; i < 32; i++) {
       num?.push(checkInDayStartStr + '_' + i)
@@ -783,10 +783,10 @@ const setIdForRangebg = () => {
   ////////////////////////////////////////////////////
 
 
-  if (greenBgDays.length == 1 && checkInDayStartStr == checkOutDayStartStr && (checkInDayStartStr !== endHoverDay)) {
+  if (blueBgDays.length == 1 && checkInDayStartStr == checkOutDayStartStr && (checkInDayStartStr !== endHoverDay)) {
     num = []
   }
-  else if ((checkInDayStartStr != checkOutDayStartStr) && greenBgDays.length == 2 && selectedMonths.length < 3 && monthIndex > 1) {
+  else if ((checkInDayStartStr != checkOutDayStartStr) && blueBgDays.length == 2 && selectedMonths.length < 3 && monthIndex > 1) {
     num = []
     for (let i = checkInInnerNum; i < 32; i++) {
       num?.push(checkInDayStartStr + '_' + i)
@@ -822,7 +822,7 @@ const setRangeBg = () => {
 const setInputValue = (id) => {
   destinationSelected = true;
   hideCitynameList()
-  cityInputGreenBg()
+  cityInputInfoBg()
   destinationInputField.value = document.getElementById(id).innerText;
 }
 
