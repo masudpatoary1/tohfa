@@ -13,6 +13,9 @@ const calendarContainer = document.getElementById('calendar-container');
 const destinationListDiv = document.getElementById(`destination-list-items`)
 const days = document.getElementsByClassName("day")
 const SearchBtn = document.getElementById('search-url')
+const errorModal = document.getElementById('input-error')
+const successModal = document.getElementById('input-success')
+const modalinputContent = document.getElementById('modal_input_content')
 
 let destinationSelected = false
 let numberOfClickOnDateBtn = 0
@@ -137,45 +140,6 @@ window.addEventListener('load', () => {
 
 
 
-// guest increase decrease
-const guestNumber = document.getElementById('guest-number')
-const guestNumberPlusSign = document.getElementById('guest-number-plus-icon')
-
-function increaseValue() {
-  let value = parseInt(guestNumber.innerText, 10);
-  value = isNaN(value) ? 0 : value;
-  value++;
-  value >= 10 ? (
-    guestNumber.innerText = 10,
-    guestNumberPlusSign.classList.add('guest-ten-plus-sign-flex'),
-    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-none'),
-    fd_Total_guest = guestNumber.innerText
-  ) : (
-    guestNumber.innerText = value,
-    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-flex'),
-    guestNumberPlusSign.classList.add('guest-ten-plus-sign-none'),
-    fd_Total_guest = guestNumber.innerText
-  );
-}
-
-function decreaseValue() {
-  let value = parseInt(guestNumber.innerText, 10);
-  value = isNaN(value) ? 1 : value;
-  value < 1 || value === 0 ? value = 1 : '';
-  value--;
-  value < 1 || value === 0 ? value = 1 : '';
-  value < 10 ? (
-    guestNumber.innerText = value,
-    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-flex'),
-    guestNumberPlusSign.classList.add('guest-ten-plus-sign-none'),
-    fd_Total_guest = guestNumber.innerText
-  ) : (
-    guestNumberPlusSign.classList.add('guest-ten-plus-sign-flex'),
-    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-none'),
-    fd_Total_guest = guestNumber.innerText
-  );
-}
-
 // destination city
 
 const allCityName = [
@@ -246,7 +210,7 @@ for (let i = 0; i < allCityName.length; i++) {
 destinationInputField.addEventListener('keyup', () => {
   const filter = destinationInputField.value.toUpperCase();
   a = destinationListDiv.getElementsByTagName("div");
-// console.log(a.length)
+  // console.log(a.length)
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -826,24 +790,84 @@ const setInputValue = (id) => {
   destinationInputField.value = document.getElementById(id).innerText;
 }
 
+// guest increase decrease
+const guestNumber = document.getElementById('guest-number')
+const guestNumberPlusSign = document.getElementById('guest-number-plus-icon')
+
+function increaseValue() {
+  let value = parseInt(guestNumber.innerText, 10);
+  value = isNaN(value) ? 0 : value;
+  value++;
+  value >= 25 ? (
+    guestNumber.innerText = 25,
+    guestNumberPlusSign.classList.add('guest-ten-plus-sign-flex'),
+    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-none'),
+    fd_Total_guest = guestNumber.innerText
+  ) : (
+    guestNumber.innerText = value,
+    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-flex'),
+    guestNumberPlusSign.classList.add('guest-ten-plus-sign-none'),
+    fd_Total_guest = guestNumber.innerText
+  );
+}
+
+function decreaseValue() {
+  let value = parseInt(guestNumber.innerText, 10);
+  value = isNaN(value) ? 1 : value;
+  value < 1 || value === 0 ? value = 1 : '';
+  value--;
+  value < 1 || value === 0 ? value = 1 : '';
+  value < 25 ? (
+    guestNumber.innerText = value,
+    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-flex'),
+    guestNumberPlusSign.classList.add('guest-ten-plus-sign-none'),
+    fd_Total_guest = guestNumber.innerText
+  ) : (
+    guestNumberPlusSign.classList.add('guest-ten-plus-sign-flex'),
+    guestNumberPlusSign.classList.remove('guest-ten-plus-sign-none'),
+    fd_Total_guest = guestNumber.innerText
+  );
+}
+
 const setSearchLink = () => {
   fd_Total_guest = guestNumber.innerText
   setInputValueForSearch()
   console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
-  // document.getElementById('search-url').setAttribute('href', `https://www.sonder.com/destinations/${fd_City_name}/search?sleeps=${fd_Total_guest}&check_in_dt=${fd_Check_in}${fd_Check_out == undefined || fd_Check_out == '' ? '' : `&check_out_dt=${fd_Check_out}`}&neighborhood=all_neighborhoods&bedroom_count=0&bed_count=1&bathroom_count=1`)
 }
+const modalBody = document.createElement('div')
 
 const searchForVacation = () => {
   const guestNumber = parseInt(document.getElementById('guest-number').innerText)
+  
   const checkinDateSearch = checkinDate.innerText
   const checkOutDateSearch = checkOutDate.innerText
   if (checkOutDate.innerText == '' && checkinDate.innerText == '') {
-    // alert('Your search request can not be complete, please put correct date')
+    
+    modalBody.classList.add('modal-body')
+    
+    modalBody.innerHTML = `
+    <p class="text-danger modal-title fs-5">Data is not placed properly</p>
+                    <p>Please give correct info</p>
+    `
+    modalinputContent.appendChild(modalBody)
+    // SearchBtn.setAttribute("data-bs-toggle", "modal")
+    // SearchBtn.click()
 
-    SearchBtn.setAttribute("data-bs-toggle", "modal")
-    SearchBtn.click()
     return
   } else {
+    
+    modalBody.innerHTML = `
+    <h3>Congratulations!</h3>
+    <p class="text-success  fs-6">Destination is ${fd_City_name}</p>
+    <p class="text-success  fs-6">Check in date ${fd_Check_in}</p>
+    <p class="text-success  fs-6">Check out date ${fd_Check_out}</p>
+    <p class="text-success  fs-6">Selected seat ${fd_Total_guest}</p>
+    `
+    modalinputContent.appendChild(modalBody)
+    // SearchBtn.setAttribute("data-bs-toggle", "modal")
+    // SearchBtn.click()
+
+
     setTimeout(() => { controlCheckOutDate() }, 10)
     setSearchLink()
     console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
@@ -851,7 +875,9 @@ const searchForVacation = () => {
 }
 
 const hideModalBtn = () => {
-  SearchBtn.removeAttribute("data-bs-toggle", "modal")
+  // SearchBtn.removeAttribute("data-bs-toggle", "modal")
+  modalBody.innerHTML =''
+
 }
 
 initButtons();
