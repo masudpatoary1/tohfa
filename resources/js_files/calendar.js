@@ -1,6 +1,6 @@
 const destinationDiv = document.getElementById(`city-input-div`)
 const destinationSeArchIcon = document.getElementById(`city-icon`)
-let destinationInputField = document.getElementById('city-input-field')
+const destinationInputField = document.getElementById('city-input-field')
 const checkinLabel = document.getElementById('checkin-label');
 const checkinDate = document.getElementById('checkin-date');
 const checkOutLabel = document.getElementById('checkout-label');
@@ -783,13 +783,6 @@ const setRangeBg = () => {
 
 }
 
-const setInputValue = (id) => {
-  destinationSelected = true;
-  hideCitynameList()
-  cityInputInfoBg()
-  destinationInputField.value = document.getElementById(id).innerText;
-}
-
 // guest increase decrease
 const guestNumber = document.getElementById('guest-number')
 const guestNumberPlusSign = document.getElementById('guest-number-plus-icon')
@@ -838,34 +831,29 @@ const modalBody = document.createElement('div')
 
 const searchForVacation = () => {
   const guestNumber = parseInt(document.getElementById('guest-number').innerText)
-  
+
   const checkinDateSearch = checkinDate.innerText
   const checkOutDateSearch = checkOutDate.innerText
   if (checkOutDate.innerText == '' && checkinDate.innerText == '') {
-    
-    modalBody.classList.add('modal-body')
-    
-    modalBody.innerHTML = `
-    <p class="text-danger modal-title fs-5">Data is not placed properly</p>
-                    <p>Please give correct info</p>
-    `
-    modalinputContent.appendChild(modalBody)
-    // SearchBtn.setAttribute("data-bs-toggle", "modal")
-    // SearchBtn.click()
 
-    return
-  } else {
-    
+    modalBody.classList.add('modal-body')
+
     modalBody.innerHTML = `
-    <h3>Congratulations!</h3>
-    <p class="text-success  fs-6">Destination is ${fd_City_name}</p>
-    <p class="text-success  fs-6">Check in date ${fd_Check_in}</p>
-    <p class="text-success  fs-6">Check out date ${fd_Check_out}</p>
-    <p class="text-success  fs-6">Selected seat ${fd_Total_guest}</p>
-    `
+                    <p class="text-danger modal-title fs-5">Data is not placed properly</p>
+                    <p>Please give correct info</p>`
     modalinputContent.appendChild(modalBody)
-    // SearchBtn.setAttribute("data-bs-toggle", "modal")
-    // SearchBtn.click()
+    return
+  }
+  else {
+
+    modalBody.innerHTML = `
+        <h3>Congratulations!</h3>
+        <p class="text-success  fs-6">Destination: ${destinationInputField.value}</p>
+        <p class="text-success  fs-6">Check in date: ${checkinDateSearch}</p>
+        <p class="text-success  fs-6">Check out date: ${checkOutDateSearch}</p>
+        <p class="text-success  fs-6">Selected seat: ${fd_Total_guest}</p>`
+
+    modalinputContent.appendChild(modalBody)
 
 
     setTimeout(() => { controlCheckOutDate() }, 10)
@@ -875,9 +863,7 @@ const searchForVacation = () => {
 }
 
 const hideModalBtn = () => {
-  // SearchBtn.removeAttribute("data-bs-toggle", "modal")
-  modalBody.innerHTML =''
-
+  modalBody.innerHTML = '';
 }
 
 initButtons();

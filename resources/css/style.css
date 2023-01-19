@@ -411,6 +411,7 @@ input {
     .search-div {
         width: 98%;
         max-width: 450px;
+        padding: 0 8px;
         height: auto;
         background-color: transparent;
         border: none;
@@ -503,6 +504,6 @@ input {
 
 @media(max-width: 769px) {
     .carousel_img {
-        height: 100vh;
+        height: 88vh;
     }
 }
