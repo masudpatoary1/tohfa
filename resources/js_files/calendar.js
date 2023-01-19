@@ -198,9 +198,9 @@ for (let i = 0; i < allCityName.length; i++) {
   destinationListDiv.appendChild(cityNameDiv);
   cityNameDiv.addEventListener('click', (id) => {
     destinationInputField.value = cityNameDiv.innerText;
-    a = destinationListDiv.getElementsByTagName("div");
-    for (i = 0; i < a.length; i++) {
-      a[i].classList.remove('d-none')
+    // a = destinationListDiv.getElementsByTagName("div");
+    for (i = 0; i < cityNameDiv.length; i++) {
+      cityNameDiv[i].classList.remove('d-none')
     }
     setInputValueForSearch()
     hideCitynameList()
@@ -210,21 +210,20 @@ for (let i = 0; i < allCityName.length; i++) {
 destinationInputField.addEventListener('keyup', () => {
   const filter = destinationInputField.value.toUpperCase();
   a = destinationListDiv.getElementsByTagName("div");
-  // console.log(a.length)
+  console.log(a)
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
     if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      // a[i].style.display = "";
+      console.log('if txtValue', txtValue.toUpperCase().indexOf(filter))
       a[i].classList.remove('d-none')
       a[i].classList.add('d-block')
     } else {
-      // a[i].style.display = "none"; 
-
-      a[i].classList.remove('d-none')
-      a[i].classList.add('d-block')
+      console.log('else txtValue', txtValue.toUpperCase().indexOf(filter))
+      a[i].classList.add('d-none')
     }
   }
 })
+
 const setInputValueForSearch = () => {
   const cityNameForSearch = destinationInputField.value.toLowerCase().replace(/ /g, '_')
   fd_City_name = cityNameForSearch.toLowerCase().replaceAll('.', '')
@@ -779,8 +778,6 @@ const setRangeBg = () => {
   } else {
     return
   }
-
-
 }
 
 // guest increase decrease
