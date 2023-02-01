@@ -346,11 +346,14 @@ input {
 }
 
 .clc_btn:hover {
-    background-color: #77d8ff;
+    background-color: #00aaee;
+}
+.clc_btn:hover>svg {
+    fill: #ffffff;
 }
 
 .clc_btn:active {
-    background-color: #02b5fc;
+    background-color: #0081b5;
 }
 
 .guest-number-div {

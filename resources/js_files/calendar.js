@@ -12,6 +12,8 @@ const arrowIcon = document.getElementById('arrow-icon')
 const calendarContainer = document.getElementById('calendar-container');
 const destinationListDiv = document.getElementById(`destination-list-items`)
 const days = document.getElementsByClassName("day")
+const guestNumber = document.getElementById('guest-number')
+const guestNumberPlusSign = document.getElementById('guest-number-plus-icon')
 const SearchBtn = document.getElementById('search-url')
 const errorModal = document.getElementById('input-error')
 const successModal = document.getElementById('input-success')
@@ -781,8 +783,7 @@ const setRangeBg = () => {
 }
 
 // guest increase decrease
-const guestNumber = document.getElementById('guest-number')
-const guestNumberPlusSign = document.getElementById('guest-number-plus-icon')
+
 
 function increaseValue() {
   let value = parseInt(guestNumber.innerText, 10);
@@ -820,14 +821,14 @@ function decreaseValue() {
 }
 
 const setSearchLink = () => {
-  fd_Total_guest = guestNumber.innerText
+  fd_Total_guest = guestNumber?.innerText
   setInputValueForSearch()
   console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
 }
 const modalBody = document.createElement('div')
 
 const searchForVacation = () => {
-  const guestNumber = parseInt(document.getElementById('guest-number').innerText)
+  // const guestNumber = parseInt(guestNumber.innerText)
 
   const checkinDateSearch = checkinDate.innerText
   const checkOutDateSearch = checkOutDate.innerText
@@ -842,9 +843,12 @@ const searchForVacation = () => {
     return
   }
   else {
-
+    setTimeout(() => { controlCheckOutDate() }, 10)
+    setSearchLink()
+    console.log(fd_Total_guest)
     modalBody.innerHTML = `
-        <h3>Congratulations!</h3>
+        <h3 class="text-center" >Congratulations!</h3>
+        <p class="text-success text-center fs-6">You have successfully filled up the form</p>
         <p class="text-success  fs-6">Destination: ${destinationInputField.value}</p>
         <p class="text-success  fs-6">Check in date: ${checkinDateSearch}</p>
         <p class="text-success  fs-6">Check out date: ${checkOutDateSearch}</p>
@@ -853,9 +857,9 @@ const searchForVacation = () => {
     modalinputContent.appendChild(modalBody)
 
 
-    setTimeout(() => { controlCheckOutDate() }, 10)
-    setSearchLink()
-    console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
+
+    // console.log(fd_City_name, fd_Check_in, fd_Check_out, fd_Total_guest)
+    console.log(fd_Total_guest)
   }
 }
 
